@@ -2,6 +2,10 @@
 {
     public class Client
     {
-        string name 
+        private string Name { get; set; }
+        private string IpAddress { get; set; }
+
+
+
     }
 }
