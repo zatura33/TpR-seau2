@@ -46,7 +46,7 @@ namespace EchoTestServer
         {
             try
             {
-                _listener.Bind(new IPEndPoint(IPAddress.Parse("127.0.0.1"), _port));
+                _listener.Bind(new IPEndPoint(IPAddress.Any, _port));
                 _listener.Listen(100);
                 _listener.BeginAccept(ConnectionReady, null);
                 return true;
