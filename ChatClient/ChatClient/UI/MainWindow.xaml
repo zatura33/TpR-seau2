@@ -1,0 +1,71 @@
+﻿<Window x:Class="ChatClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:ChatSharedRessource.Models;assembly=ChatSharedRessource"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="506.532" Width="926.608"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Button x:Name="ConnectButton" Content="Connect"  HorizontalAlignment="Left" Margin="787,127,0,0" VerticalAlignment="Top" Width="113" Click="ConnectButton_Click" RenderTransformOrigin="0.5,0.5" >
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="1.142"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <StackPanel Height="200" Margin="34,211,444,65" Background="#FF131212" >
+            <ListView x:Name="ClientsListView" ItemsSource="{Binding ComboList.MainClients}" SelectionMode="Multiple" 
+                      Margin="10" Height="180"  VerticalContentAlignment="Top"  ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Name:  "/>
+                            <TextBlock x:Name="DataItem" Text="{Binding Name}" />
+                            <TextBlock Text="      --  Ip:"/>
+                            <TextBlock x:Name="ClientIp" Text="{Binding ClientIp}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <Label Content="Enter your chat nickname" HorizontalAlignment="Left" Margin="515,59,0,0" VerticalAlignment="Top"/>
+        <Label Content="Satus:" HorizontalAlignment="Left" Margin="515,133,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="StatusLabel" Content="Disconnected" HorizontalAlignment="Left" Margin="564,133,0,0" VerticalAlignment="Top"/>
+        <Label Content="ChatRoom" HorizontalAlignment="Left" Margin="67,178,0,0" VerticalAlignment="Top"/>
+        <Label Content="Server Ip Address" HorizontalAlignment="Left" Margin="515,95,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ClientIpLabel" Content="" HorizontalAlignment="Left" Margin="515,28,0,0" VerticalAlignment="Top"/>
+        
+        <TextBox x:Name="ClientMessageTextBlock" IsReadOnly="True" VerticalScrollBarVisibility="Auto"  HorizontalAlignment="Left" Margin="493,216,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="194" Width="367" Background="#7F000000"/>
+
+        <Label Content="Current Messages" HorizontalAlignment="Left" Margin="489,183,0,0" VerticalAlignment="Top" Height="25" Width="198"/>
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="23" Margin="688,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209" />
+        <TextBox x:Name="IpTextBox" HorizontalAlignment="Left" Height="23" Margin="688,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209" Text="127.0.0.1" />
+        <TextBox x:Name="MessageTextBox" KeyDown="OnKeyDownHandler" HorizontalAlignment="Left" Height="23" Margin="133,428,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="638" />
+        <Button x:Name="SendButton" Content="Send"  HorizontalAlignment="Left" Margin="789,424,0,0" VerticalAlignment="Top" Width="113"  RenderTransformOrigin="0.5,0.5" Click="SendButton_Click" >
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="1.142"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Label Content="Message" HorizontalAlignment="Left" Margin="67,434,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

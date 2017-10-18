@@ -3,11 +3,45 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ChatServer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="532.2" Width="830.4" 
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
     <Grid>
-        <TextBlock x:Name="ServerStateTextBlock" HorizontalAlignment="Left" Margin="82,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="102" Width="264"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="286*"/>
+            <ColumnDefinition Width="61*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox x:Name="ServerStateTextBlock" IsReadOnly="True" VerticalScrollBarVisibility="Auto"  HorizontalAlignment="Left" Margin="435,144,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="286" Width="315" Background="#7F000000" Grid.ColumnSpan="2"/>
+
+        <Label Content="Adresse Serveur" HorizontalAlignment="Left" Margin="325,36,0,0" VerticalAlignment="Top"/>
+        <Label Content="Status Message" HorizontalAlignment="Left" Margin="440,96,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ServerIpLabel" Content="" HorizontalAlignment="Left" Margin="460,36,0,0" VerticalAlignment="Top"/>
+        <StackPanel Height="280" Margin="30,144,306.2,78.4" Background="#7F000000">
+            <ListView x:Name="ClientsListView" ItemsSource="{Binding ComboList}" SelectionMode="Multiple" Width="320" MaxHeight="270" 
+              VerticalContentAlignment="Top"  ScrollViewer.VerticalScrollBarVisibility="Visible" Background="#FF2B2B2B" Height="267" Margin="12,5,11.2,5">
+
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Name:  "/>
+                            <TextBlock x:Name="DataItem" Text="{Binding Name}" />
+                            <TextBlock Text="      --  Ip:"/>
+                            <TextBlock x:Name="ClientIp" Text="{Binding ClientIp}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <Label Content="Clients Connected" HorizontalAlignment="Left" Margin="30,105,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
