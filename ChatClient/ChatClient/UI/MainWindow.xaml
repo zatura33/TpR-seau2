@@ -25,7 +25,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <StackPanel Height="200" Margin="34,211,444,65" Background="#FF131212" >
+        <StackPanel Height="200" Margin="34,211,444,65" Background="#7F79DD26"  >
             <ListView x:Name="ClientsListView" ItemsSource="{Binding ComboList.MainClients}" SelectionMode="Multiple" 
                       Margin="10" Height="180"  VerticalContentAlignment="Top"  ScrollViewer.VerticalScrollBarVisibility="Visible">
 
@@ -48,8 +48,8 @@
         <Label Content="ChatRoom" HorizontalAlignment="Left" Margin="67,178,0,0" VerticalAlignment="Top"/>
         <Label Content="Server Ip Address" HorizontalAlignment="Left" Margin="515,95,0,0" VerticalAlignment="Top"/>
         <Label x:Name="ClientIpLabel" Content="" HorizontalAlignment="Left" Margin="515,28,0,0" VerticalAlignment="Top"/>
-        
-        <TextBox x:Name="ClientMessageTextBlock" IsReadOnly="True" VerticalScrollBarVisibility="Auto"  HorizontalAlignment="Left" Margin="493,216,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="194" Width="367" Background="#7F000000"/>
+
+        <TextBox x:Name="ClientMessageTextBlock" IsReadOnly="True" VerticalScrollBarVisibility="Auto"  HorizontalAlignment="Left" Margin="493,216,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="194" Width="367" Background="#7F79DD26"/>
 
         <Label Content="Current Messages" HorizontalAlignment="Left" Margin="489,183,0,0" VerticalAlignment="Top" Height="25" Width="198"/>
         <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="23" Margin="688,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209" />
