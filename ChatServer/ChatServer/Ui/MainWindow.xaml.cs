@@ -26,7 +26,6 @@ namespace ChatServer
         {
             InitializeComponent();
             ListenQueues.MyInstance().PropertyChanged += new PropertyChangedEventHandler(ListeningQueueChanged);
-
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             ServerStateTextBlock.Text = Constants.ServerOn;
             ServerIpLabel.Content = GetLocalIpAddress();
@@ -35,12 +34,12 @@ namespace ChatServer
             Closing += this.OnWindowClosing;
             ComboList = new MyObserveBoxContainer();            
             this.DataContext = this;
-
         }
 
+        //Event listener on Message Queue
         static void ListeningQueueChanged(object sender, PropertyChangedEventArgs e)
         {
-
+            // If it is a new network message
             if (e.PropertyName == "newMessage")
             {
                 Message currentMessage = ListenQueues.MyInstance().PullMessage(); // removed
@@ -48,13 +47,14 @@ namespace ChatServer
                 currentMessage = null;
                 RefreshClientList();
             }
+            // if it is a text message to show in interface 
             else if (e.PropertyName == "newTextMessage")
             {
                 WriteToMainBox(ListenQueues.MyInstance().PullTextMessage());
             }
-
         }
 
+        // After client connect or disconnect
         public static void RefreshClientList()
         {
             if (Clients.ClientsChanged)
@@ -63,6 +63,8 @@ namespace ChatServer
                 Clients.ClientsChanged = false;
             }
         }
+
+        // Refresh Ui List component
         public static void RefreshUiList()
         {
             Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new Action(() =>
@@ -74,7 +76,7 @@ namespace ChatServer
 
             }));
         }
-
+        // Clear all process on close
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
             Environment.Exit(0);
@@ -91,18 +93,6 @@ namespace ChatServer
                 MainWindow mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
                 mainWindow.ServerStateTextBlock.Text = mainWindow.ServerStateTextBlock.Text + message + Constants.Return;
             }));
-        }
-
-        public void TextBoxListenLoop()
-        {
-            while (true)
-            {
-                if (ListenQueues.MyInstance().CountText() > 0)
-                {
-                    WriteToMainBox(ListenQueues.MyInstance().PullTextMessage());
-                }
-
-            }
         }
 
 

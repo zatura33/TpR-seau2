@@ -1,8 +1,4 @@
-﻿
-
-using System;
-
-namespace ChatSharedRessource.Models
+﻿namespace ChatSharedRessource.Models
 {
     using System.Collections.Generic;
     public class Clients
@@ -11,14 +7,13 @@ namespace ChatSharedRessource.Models
         public static int ClientCount { get; set; } 
         public static List<Client> MyStaticClients { get; set; }
         public  List<Client> MyClients { get; set; }
-
         public Clients(string myClients)
         {
             MyClients =new List<Client>();
             string[] clientsArray = myClients.Split(';');
             foreach (string client in clientsArray)
             {
-                if (client != "")
+                if (client != string.Empty)
                 {
                     Client newClient = new Client(client);
                     MyClients.Add(newClient);
@@ -34,7 +29,7 @@ namespace ChatSharedRessource.Models
             MyClients = myClients;
         }
 
-
+        //Check if client is in ClientList
         public static bool IsInStaticList(Client myClient)
         {
             bool isInList = false;
@@ -57,8 +52,7 @@ namespace ChatSharedRessource.Models
                 {
                     Client newClient = new Client(client);
                     MyStaticClients.Add(newClient);
-                }
-                   
+                }                 
             }
         }
 
@@ -91,7 +85,7 @@ namespace ChatSharedRessource.Models
             string strList = string.Empty;
             foreach (var client in MyStaticClients)
             {
-                if(client.GetClientStr() != "")
+                if(client.GetClientStr() != string.Empty)
                     strList += client.GetClientStr();
             }
             return strList;

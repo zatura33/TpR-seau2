@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace ChatSharedRessource.Models
+﻿namespace ChatSharedRessource.Models
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    // A list of singleton listening Queue to receive Message or string
     public class ListenQueues : INotifyPropertyChanged
     {
         private static Message CurrentMessage { get; set; }
@@ -13,6 +12,7 @@ namespace ChatSharedRessource.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+        // Use to check when new message is coming instead of a while loop
         public event PropertyChangedEventHandler PropertyChanged;
 
         private static ListenQueues _instance;
@@ -27,14 +27,12 @@ namespace ChatSharedRessource.Models
         }
 
         public static ListenQueues MyInstance()
-        {
-            
+        {        
                 if (_instance == null)
                 {
                     _instance = new ListenQueues();
                 }
-                return _instance;
-            
+                return _instance;          
         }
         public static void ServerListeningLoop()
         {
@@ -51,9 +49,6 @@ namespace ChatSharedRessource.Models
                 }
             }
         }
-
-      
-
 
         public void AddMessage(Message message)
         {
@@ -107,8 +102,6 @@ namespace ChatSharedRessource.Models
         {
             return OptionnalTextMessages.Count;
         }
-
-
 
     }
 }

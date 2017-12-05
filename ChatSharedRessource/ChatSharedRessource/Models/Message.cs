@@ -1,8 +1,6 @@
 ﻿namespace ChatSharedRessource.Models
 {
     using Newtonsoft.Json;
-
-
     public class Message
     {
         public string DestinationIp { get; set; }
@@ -23,22 +21,17 @@
             Data = data;
             Clients = clients;
             ControlCommand = controlcommand;
-        }
-
-        
-
+        } 
+        // Encapsulate message to JSON
         public string EncapsulateMsg()
-        {     
-
-           
+        {               
             return JsonConvert.SerializeObject(new Message(DestinationIp, DestinationPort, SourceIp,SourcePort, Data, Clients, ControlCommand), Formatting.Indented,
                 new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Auto
-                });
-            
+                });            
         }
-
+        // Decapsulate message from JSON
         public static Message DecapsulateMsg(string message)
         {
             return JsonConvert.DeserializeObject<Message>(message, new JsonSerializerSettings

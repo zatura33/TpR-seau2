@@ -30,7 +30,7 @@ namespace ChatServer
 
             serverSocket.Start();
 
-            Console.WriteLine("Asynchonous server socket is listening at: " + ipEndPoint.Address.ToString());
+            Console.WriteLine("Asynchronous server socket is listening at: " + ipEndPoint.Address.ToString());
 
             WaitForClients();
 

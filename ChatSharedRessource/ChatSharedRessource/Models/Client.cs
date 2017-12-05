@@ -2,7 +2,6 @@
 {
     using System;
     using Newtonsoft.Json;
-    using ChatSharedRessource.Assets;
 
     public class Client
     {
@@ -44,13 +43,8 @@
         public void SendMessage(Message message)
         {
             AsynchClient client = new AsynchClient();
-
             client.Connect(message.GetDestination(), Int32.Parse(message.DestinationPort));
-
-            client.Send(message);
-
-           
-
+            client.Send(message);          
         }
 
     }

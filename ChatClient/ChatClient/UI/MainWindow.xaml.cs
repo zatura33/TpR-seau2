@@ -1,17 +1,13 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
-using ChatSharedRessource.Assets;
-using ChatSharedRessource.Models;
+﻿
+
 
 namespace ChatClient
 {
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Windows.Input;
+    using System.Windows.Threading;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Sockets;
@@ -202,19 +198,21 @@ namespace ChatClient
         public void SendMessageToClients()
         {
             Clients multicastSend = new Clients();
-
+            // Get all selected Client ... to send to them
             foreach (Client client in ClientsListView.SelectedItems)
             {
                 multicastSend.MyClients.Add(client);
             }
+            //Create Client Sender
             CommunicatorClient = new Client(GetLocalIpAddress(), (CurrentProcess.Id / 7).ToString(),
                 NameTextBox.Text, IpTextBox.Text, 0, false);
-
+            // create message
             Message multiSendMessage = new Message(IpTextBox.Text, Constants.ServerListenerPort.ToString(),
                 GetLocalIpAddress(),
                 (CurrentProcess.Id / 7).ToString(), Constants.Received + NameTextBox.Text + Constants.ReturnDash + MessageTextBox.Text + Constants.Return, multicastSend.GetListString(), new Send());
+            // Send Message to server with clients  to send list
             CommunicatorClient.SendMessage(multiSendMessage);
-
+            // refresh Msg box
             WriteToMainBox(NameTextBox.Text + Constants.SendMessag + MessageTextBox.Text);
             MessageTextBox.Text = string.Empty;
         }
