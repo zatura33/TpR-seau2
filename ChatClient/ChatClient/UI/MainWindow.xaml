@@ -13,7 +13,8 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        ResizeMode="NoResize">
     <Grid>
         <Button x:Name="ConnectButton" Content="Connect"  HorizontalAlignment="Left" Margin="787,127,0,0" VerticalAlignment="Top" Width="113" Click="ConnectButton_Click" RenderTransformOrigin="0.5,0.5" >
             <Button.RenderTransform>
@@ -35,8 +36,6 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Name:  "/>
                             <TextBlock x:Name="DataItem" Text="{Binding Name}" />
-                            <TextBlock Text="      --  Ip:"/>
-                            <TextBlock x:Name="ClientIp" Text="{Binding ClientIp}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -66,6 +65,7 @@
             </Button.RenderTransform>
         </Button>
         <Label Content="Message" HorizontalAlignment="Left" Margin="67,434,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="RefreshListBt" Content="Refresh List" HorizontalAlignment="Left" Margin="333,171,0,0" VerticalAlignment="Top" Width="138" Click="RefreshListBt_Click"/>
 
     </Grid>
 </Window>

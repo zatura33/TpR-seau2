@@ -11,9 +11,10 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize">
 
-    <Grid>
+    <Grid Margin="0,0,-23,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="286*"/>
             <ColumnDefinition Width="61*"/>
@@ -24,9 +25,9 @@
         <Label Content="Adresse Serveur" HorizontalAlignment="Left" Margin="325,36,0,0" VerticalAlignment="Top"/>
         <Label Content="Status Message" HorizontalAlignment="Left" Margin="440,96,0,0" VerticalAlignment="Top"/>
         <Label x:Name="ServerIpLabel" Content="" HorizontalAlignment="Left" Margin="460,36,0,0" VerticalAlignment="Top"/>
-        <StackPanel Height="280" Margin="30,144,306.2,78.4" Background="#7F000000">
-            <ListView x:Name="ClientsListView" ItemsSource="{Binding ComboList}" SelectionMode="Multiple" Width="320" MaxHeight="270" 
-              VerticalContentAlignment="Top"  ScrollViewer.VerticalScrollBarVisibility="Visible" Background="#FF2B2B2B" Height="267" Margin="12,5,11.2,5">
+        <StackPanel Margin="30,144,328,73" Background="#7F000000">
+            <ListView x:Name="ClientsListView" ItemsSource="{Binding ComboList}" SelectionMode="Multiple" MaxHeight="270" 
+              VerticalContentAlignment="Top"  ScrollViewer.VerticalScrollBarVisibility="Visible" Background="#FF2B2B2B" Height="271" Margin="13,5,10,5">
 
                 <ListView.ItemTemplate>
 

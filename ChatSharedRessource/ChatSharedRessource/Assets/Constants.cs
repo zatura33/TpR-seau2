@@ -12,12 +12,14 @@
         public static string IsConnecting = "IsConnecting";
         public static string Quit = "<<Quit>>";
         public static string Connect = "Connect";
+        public static string ConnectErrorDuplicated = "Connect Error duplicated name."+Return+" Try changing name.";
         public static string Send = "<<Send>>";
         public static string MultiSend = "<<Send>>";
         public static string List = "<<List>>";
         public static string Return = "\r\n";
         public static string ReturnDash = "\r\n -";
         public static string Received = "Received message from : ";
+        public static string RefreshClients = " refreshing the client list" + Return;
         public static string SendMessag = " send  message:";
         public static string SendingMessag = "Sending  message to clients ...";
         public static string ServerName = "Natacha serveuse";

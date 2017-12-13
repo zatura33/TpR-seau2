@@ -34,21 +34,6 @@
                 }
                 return _instance;          
         }
-        public static void ServerListeningLoop()
-        {
-            while (true)
-            {
-                lock (MyInstance())
-                {
-                    if (MyInstance().Count() > 0)
-                    {
-                        CurrentMessage = _instance.PullMessage(); // removed
-                        CurrentMessage?.ControlCommand.ServerTreatment(CurrentMessage);
-                        CurrentMessage = null;
-                    }
-                }
-            }
-        }
 
         public void AddMessage(Message message)
         {

@@ -57,14 +57,13 @@ namespace ChatClient
         private void AskForDisconnection()
         {
             Message disconnectMessage = new Message(IpTextBox.Text, Constants.ServerListenerPort.ToString(),
-                GetLocalIpAddress(),
-                (CurrentProcess.Id / 7).ToString(), Constants.Disconnect, CommunicatorClient.GetClientStr(), new Quit());
+                GetLocalIpAddress(),(CurrentProcess.Id / 7).ToString(), Constants.Disconnect, CommunicatorClient.GetClientStr(), new Quit());
             Client.CurrentConnection.IsConnected = false;
             CommunicatorClient.SendMessage(disconnectMessage);
             Clients.MyStaticClients.Clear();
             Clients.ClientsChanged = true;
             GuiConnectStatusEvent();
-            RefreshUiList();
+            RefreshUiList();          
         }
         public static string GetLocalIpAddress()
         {
@@ -135,11 +134,8 @@ namespace ChatClient
             }
         }
         public void OnWindowClosing(object sender, CancelEventArgs e)
-        {
-            CommunicatorClient = new Client(GetLocalIpAddress(), (CurrentProcess.Id / 7).ToString(),
-                NameTextBox.Text, IpTextBox.Text, 0, false);
+        {       
             AskForDisconnection();
-            Environment.Exit(0);
         }
 
         public static void RefreshClientList()
@@ -164,12 +160,22 @@ namespace ChatClient
 
         public static void WriteToMainBox(string message)
         {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+            // Error connecting
+            if(message== Constants.ConnectErrorDuplicated)
             {
-                MainWindow mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-                mainWindow.ClientMessageTextBlock.Text =
-                    mainWindow.ClientMessageTextBlock.Text + message + Constants.Return;
-            }));
+                MessageBoxResult result = MessageBox.Show(Constants.ConnectErrorDuplicated);
+            }
+            else
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+                {
+                    MainWindow mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                    mainWindow.ClientMessageTextBlock.Text =
+                        mainWindow.ClientMessageTextBlock.Text + message + Constants.Return;
+                }));
+
+            }
+           
         }
 
 
@@ -217,5 +223,12 @@ namespace ChatClient
             MessageTextBox.Text = string.Empty;
         }
 
+        private void RefreshListBt_Click(object sender, RoutedEventArgs e)
+        {
+            Message refreshListMessage = new Message(IpTextBox.Text, Constants.ServerListenerPort.ToString(),
+                GetLocalIpAddress(), (CurrentProcess.Id / 7).ToString(),NameTextBox.Text, CommunicatorClient.GetClientStr(), new ClientList());
+            CommunicatorClient.SendMessage(refreshListMessage);
+            ListenQueues.MyInstance().AddTextMessage(Constants.RefreshClients);
+        }
     }
 }

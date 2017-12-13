@@ -42,7 +42,7 @@ namespace ChatSharedRessource.Models
             {
                 Value = Constants.List;
             }
-            // Send newlientList to all client via server the server get it too.
+            // Send new ClientList to all client via server.. the server get it too.
             public void MulticastNewClientList()
             {
                 var sendList = new Clients(Clients.GetStaticListString());
@@ -66,8 +66,13 @@ namespace ChatSharedRessource.Models
                 }
             }
 
+            // refresh client list from server to all client
             public override void ServerTreatment(Message message)
             {
+            ListenQueues.MyInstance()
+                            .AddTextMessage(message.Data+ Constants.RefreshClients);
+            ClientList allClients = new ClientList();
+            allClients.MulticastNewClientList();
             }
             // Refresh ClientList and  Server ClientList 
             public override void ClientTreatment(Message message)
@@ -96,14 +101,19 @@ namespace ChatSharedRessource.Models
                    if (!Clients.IsInStaticList(newClient))
                         {
                         AddClientToList(message);
-                        }                   
-                    SendConnexionMessage(message);
-                    Client clientConnecting = new Client(message.Clients);
-                    //Send to Ui Box
+                        SendConnexionMessage(message);
+                        Client clientConnecting = new Client(message.Clients);
+                        ListenQueues.MyInstance()
+                            .AddTextMessage(string.Format(Constants.ClientIsConnecting, clientConnecting.Name));
+                }
+                else
+                {
+                    SendConnexionErrorMessage(message);
                     ListenQueues.MyInstance()
-                        .AddTextMessage(string.Format(Constants.ClientIsConnecting, clientConnecting.Name));
-                    ClientList allClients = new ClientList();
-                    allClients.MulticastNewClientList();
+                            .AddTextMessage(Constants.ConnectErrorDuplicated);
+                }
+                ClientList allClients = new ClientList();
+                allClients.MulticastNewClientList();
                 }
             }
 
@@ -137,16 +147,44 @@ namespace ChatSharedRessource.Models
                     GetLocalIpAddress(), Clients.ClientCount, true);
                 serveResponse.SendMessage(connectMessage);
             }
-            // Tell Client that he's connected
-            public override void ClientTreatment(Message message)
+        private void SendConnexionErrorMessage(Message message)
+        {
+            Client server = new Client(GetLocalIpAddress(), Constants.ServerListenerPort.ToString(),
+                Constants.ServerName,
+                GetLocalIpAddress(), 0, true);
+            Message connectMessage = new Message
+            {
+                DestinationIp = message.SourceIp,
+                DestinationPort = message.SourcePort,
+                SourceIp = message.DestinationIp,
+                SourcePort = message.DestinationPort,
+                Data = Constants.ConnectErrorDuplicated,
+                Clients = null,
+                ControlCommand = new Connect()
+            };
+            Client serveResponse = new Client(message.DestinationIp, message.DestinationPort, Constants.ServerName,
+                GetLocalIpAddress(), Clients.ClientCount, true);
+            serveResponse.SendMessage(connectMessage);
+        }
+        // Tell Client that he's connected or Not
+        public override void ClientTreatment(Message message)
             {
                 lock (ListenQueues.MyInstance())
+                {
+                if (message.Data == Constants.Connect)
                 {
                     Clients.RefreshClients(message.Clients);
                     ListenQueues.MyInstance().AddTextMessage(Constants.Welcome);
                     //AddClientToList(message);
                     Clients.ClientsChanged = true;
                     Client.CurrentConnection.IsConnected = true;
+                }
+                else if (message.Data == Constants.ConnectErrorDuplicated) {
+                    //Tell the client to use another name
+                    ListenQueues.MyInstance().AddTextMessage(Constants.ConnectErrorDuplicated);
+
+                }
+                    
                 }
             }
         }
@@ -229,14 +267,14 @@ namespace ChatSharedRessource.Models
                 Clients.ClientsChanged = true;
                 Client disconnectingClient = FindClient(new Client(message.Clients));
                 Clients.MyStaticClients.Remove(disconnectingClient);
-                ClientList refreshedList = new ClientList();
-                refreshedList.MulticastNewClientList();
                 lock (ListenQueues.MyInstance())
                 {
                     ListenQueues.MyInstance()
                         .AddTextMessage(string.Format(Constants.ClientIsDisconnected, disconnectingClient.Name));
                 }
-            }
+                ClientList allClients = new ClientList();
+                allClients.MulticastNewClientList();
+        }
 
             public override void ClientTreatment(Message message)
             {

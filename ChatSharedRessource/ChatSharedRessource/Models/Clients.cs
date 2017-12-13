@@ -35,7 +35,7 @@
             bool isInList = false;
             foreach (Client client in MyStaticClients)
             {
-                if (client.Name == myClient.Name && client.ClientIp == myClient.ClientIp)
+                if (client.Name == myClient.Name)
                 {
                     isInList = true;
                 }
